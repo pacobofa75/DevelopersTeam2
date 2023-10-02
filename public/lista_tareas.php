@@ -22,8 +22,9 @@
         // Mostrar las tareas
         if (!empty($tasks)) {
             echo '<ul class="list-disc pl-6">';
-            foreach ($tasks as $task) {
-                echo '<li class="mb-2">' . $task['title'] . '</li>';
+            foreach ($tasks as $taskId => $task) {
+                echo '<li class="mb-2">' . $task['title'] . ' ';
+                echo '<a href="editar_tarea.php?id=' . $taskId . '" class="text-blue-500 hover:underline">Editar</a></li>';
             }
             echo '</ul>';
         } else {
