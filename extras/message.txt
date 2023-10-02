@@ -1,0 +1,173 @@
+# DEVELOPERS
+
+ESTRUCTURA del STARTER CODE
+
+**APP**
+
+---
+
+- CONTROLLERS
+    - ApplicationController → lógica común y global
+    - ErrorController (no tocar de momento)
+    - Test Controller (no tocar de momento)
+    
+- MODELS
+    
+    Aquí va la lógica que interactúa con la base de datos + propiedades + métodos. 
+    
+    - Task
+    - Status
+    - Tasklist: aquí hay que indicar que guarde cosas en el json
+    - 
+    
+- VIEWS
+    - **Layouts**
+        - Layout.phtml: marco general común a todas las vistas
+        
+        Añadimos las partes de la página que se repiten:
+        
+        Encabezado con logo + menú
+        
+        Footer
+        
+    - **Scripts**
+        
+        Las páginas de cada “tarea”, es decir:
+        
+        Añadir tarea, mostrar, editar, etc
+        
+        - Error
+            - error.phtml
+        - Test
+            - index.phtml
+
+**CONFIG**
+
+---
+
+- db.inc.php (no tocar de momento)
+    
+    Archivo de configuración para la base de datos
+    
+- environment.inc.php (no tocar de momento)
+    
+    Archivo de configuración para definir el entorno de la aplicación
+    
+- **routes.php**
+    
+    Definir las rutas (URLs) y las correspondientes acciones del controlador que deben ejecutarse cuando se accede a esas rutas en tu aplicación.
+    
+    1. La clave es la URL de la ruta.
+    2. El valor es una cadena que especifica el controlador y la acción que se deben ejecutar cuando se accede a esa ruta.
+    
+    Por ejemplo, en el fragmento de código que proporcionaste, hay una ruta definida:
+    
+    ```
+    phpCopy code
+    '/test' => 'test#index',
+    ```
+    
+    Esto significa que cuando un usuario acceda a la URL "/test", la acción "index" del controlador "test" se ejecutará para manejar la solicitud.
+    
+    En el ejemplo dado, "test" se refiere al controlador "TestController", mientras que "index" es el nombre del método (acción) en el controlador que se ejecutará.
+    
+    Tendremos que añadir la ruta a las acciones que requieran ir a otra página:
+    
+    - Login
+    - Crear tasca
+    - Modificar
+    - Mostrar
+        
+        ??
+        
+    - settings.ini (no tocar de momento)
+        
+        Archivo de configuración para otras configuraciones de la aplicación
+        
+
+---
+
+**LIB - no se toca**
+
+---
+
+**WEB**
+
+---
+
+Carpeta pública accesible desde el navegador
+
+- I**mages**
+    
+    Contiene las imágenes utilizadas
+    
+- **javascripts**
+    
+    Frontend
+    
+- **stylesheets**
+    
+    CSS Tailwind
+    
+- **.htaccess**
+    
+    Archivo de configuración para el servidor web Apache (si está presente, generalmente se utiliza para reescribir URL o definir ciertas reglas de comportamiento).
+    
+- **index.php**
+    
+    Punto de entrada de la aplicación, donde las solicitudes son dirigidas y procesadas.
+    
+
+---
+
+### PERSISTENCIA EN ARCHIVO JSON
+
+Se utiliza un archivo json para almacenar los datos.
+
+A tener en cuenta:
+
+1. El archivo json guarda el contenido creado por los usuarios. Hay que inventárselo para poder ir viendo si funciona.
+    
+    Ejemplo aprox:
+    
+       `{`
+    
+    `id: 156451,`
+    
+    `titulo: “Notas sobre arrays”;`
+    
+    `summary: “Funciones principales de arrays”;`
+    
+    `datetime: 25/12/23`
+    
+    `status: running;`
+    
+    `user: “Eli”`
+    
+    `}`
+    
+2. Implementar lectura y escritura del JSON:
+    1. En la carpeta /Model:
+        
+        **TaskModel.php**
+        
+        debe contener métodos para leer y escribir el JSON: 
+        
+        La classe Task debe representar el modelo de datos y tendrá los métodos para las acciones. No debe tener ninguna referencia directa a la vista o interacción con el user. Sólo habla con el JSON.
+        
+        - addTask
+        - getAllTask
+        - modify_task
+            
+            etc etc
+            
+            https://www.delftstack.com/es/howto/php/how-to-generate-json-file-in-php/
+            
+            https://www.delftstack.com/es/howto/php/file_get_contents-php-input/https://www.delftstack.com/es/howto/php/how-to-parse-a-json-file-in-php/
+            
+    2. **TaskController.php**
+        
+        Es una clase que representa el controlador. Llamará a los métodos del TaskModel.php
+        
+        - Prepara los datos del modelo y los pasa a las vistas.
+        - Redireccionar al user después de realizar una acción (ejemplo: volver a la página principal).
