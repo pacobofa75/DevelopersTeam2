@@ -16,10 +16,11 @@
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($_POST['action'] === 'create') {
                 $title = $_POST['title'];
+                $user = $_POST['user'];
                 $description = $_POST['description'];
                 $starTime = $_POST['starTime'];
                 $endTime = $_POST['endTime'];
-                $taskController->store($title, $description,  $starTime, $endTime);
+                $taskController->store($title, $user, $description,  $starTime, $endTime);
             } elseif ($_POST['action'] === 'delete') {
                 $taskId = $_POST['task_id'];
                 $taskController->delete($taskId);
@@ -33,6 +34,8 @@
             <input type="hidden" name="action" value="create">
             <label for="title" class="block">Título:</label>
             <input type="text" name="title" required class="border rounded py-1 px-2">
+            <label for="user" class="block">Usuario:</label>
+            <input type="text" name="user" required class="border rounded py-1 px-2">
             <label for="description" class="block mt-2">Descripción:</label>
             <input type="text" name="description" required class="border rounded py-1 px-2">
             <label for="starTime" class="block mt-2">Inicio:</label>
@@ -45,7 +48,7 @@
         <ul>
             <?php foreach ($tasks as $taskId => $task) : ?>
                 <li class="mb-2">
-                    <?= $task->getTitle(); ?> - <?= $task->getDescription(); ?>
+                    <?= $task->getTitle(); ?> - <?= $task->getUser(); ?> - <?= $task->getDescription(); ?>
                     Inicio: <?= $task->getStartTime(); ?> - Fin: <?= $task->getEndTime(); ?>
                     <form method="post" class="inline-block ml-2">
                         <input type="hidden" name="action" value="delete">

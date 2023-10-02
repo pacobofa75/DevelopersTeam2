@@ -16,9 +16,9 @@ class TaskController
         return $this->tasks;
     }
 
-    public function store($title, $description, $startTime, $endTime)
+    public function store($title, $user, $description, $startTime, $endTime)
     {
-        $task = new Task($title, $description, $startTime, $endTime);
+        $task = new Task($title, $user, $description, $startTime, $endTime);
         $this->tasks[] = $task;
         $this->saveTasksToJson();
     }
@@ -46,7 +46,7 @@ class TaskController
     
             if (is_array($decodedTasks)) {
                 foreach ($decodedTasks as $taskData) {
-                    $task = new Task($taskData->title, $taskData->description, $taskData->startTime, $taskData->endTime);
+                    $task = new Task($taskData->title, $taskData->user, $taskData->description, $taskData->startTime, $taskData->endTime);
                     $task->setId($taskData->id); // Assign the ID
                     $this->tasks[] = $task;
                 }
@@ -68,6 +68,7 @@ class TaskController
             $encodedTasks[] = [
                 'id' => $task->getId(),         // Include the ID
                 'title' => $task->getTitle(),
+                'user' => $task->getUser(),
                 'description' => $task->getDescription(),
                 'startTime' => $task->getStartTime(),
                 'endTime' =>$task->getEndTime()
