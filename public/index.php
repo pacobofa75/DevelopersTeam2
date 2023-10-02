@@ -17,7 +17,9 @@
             if ($_POST['action'] === 'create') {
                 $title = $_POST['title'];
                 $description = $_POST['description'];
-                $taskController->store($title, $description);
+                $starTime = $_POST['starTime'];
+                $endTime = $_POST['endTime'];
+                $taskController->store($title, $description,  $starTime, $endTime);
             } elseif ($_POST['action'] === 'delete') {
                 $taskId = $_POST['task_id'];
                 $taskController->delete($taskId);
@@ -33,6 +35,10 @@
             <input type="text" name="title" required class="border rounded py-1 px-2">
             <label for="description" class="block mt-2">Descripción:</label>
             <input type="text" name="description" required class="border rounded py-1 px-2">
+            <label for="starTime" class="block mt-2">Inicio:</label>
+            <input type="datetime-local" name="starTime" required class="border rounded py-1 px-2">
+            <label for="endTime" class="block mt-2">Final:</label>
+            <input type="datetime-local" name="endTime" required class="border rounded py-1 px-2">
             <button type="submit" class="bg-blue-500 text-white py-1 px-2 rounded mt-2">Agregar Tarea</button>
         </form>
 
@@ -40,6 +46,7 @@
             <?php foreach ($tasks as $taskId => $task) : ?>
                 <li class="mb-2">
                     <?= $task->getTitle(); ?> - <?= $task->getDescription(); ?>
+                    Inicio: <?= $task->getStartTime(); ?> - Fin: <?= $task->getEndTime(); ?>
                     <form method="post" class="inline-block ml-2">
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="task_id" value="<?= $taskId; ?>">
