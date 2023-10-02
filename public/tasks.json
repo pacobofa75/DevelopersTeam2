@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Tarea 1",
+        "user": "Paco",
+        "description": "wegWG",
+        "starTime": "2023-10-05T21:32",
+        "endTime": "2023-10-20T12:03"
+    },
+    {
+        "title": "Tarea 2",
+        "user": "Pavel",
+        "description": "waerg",
+        "starTime": "2023-10-02T12:21",
+        "endTime": "2023-10-04T21:01"
+    },
+    {
+        "title": "Tarea 3",
+        "user": "Paco",
+        "description": "awEGAw",
+        "starTime": "2023-10-04T23:32",
+        "endTime": "2023-10-05T21:21"
+    }
+]
