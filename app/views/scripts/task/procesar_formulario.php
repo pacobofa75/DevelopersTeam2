@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Obtener tareas existentes del archivo JSON (si existe)
     $tareas = [];
-    if (file_exists('tasks.json')) {
-        $tareasJson = file_get_contents('tasks.json');
+    if (file_exists('task.json')) {
+        $tareasJson = file_get_contents('task.json');
         $tareas = json_decode($tareasJson, true);
     }
 
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $tareas[] = $nuevaTarea;
 
     // Guardar el array actualizado en el archivo JSON
-    file_put_contents('tasks.json', json_encode($tareas, JSON_PRETTY_PRINT));
+    file_put_contents('task.json', json_encode($tareas, JSON_PRETTY_PRINT));
 
     // Redirigir a la página principal
     header("Location: index.php");

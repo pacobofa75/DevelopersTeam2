@@ -6,7 +6,7 @@ if (isset($_POST['taskId'], $_POST['title'], $_POST['description'])) {
     $description = htmlspecialchars($_POST['description']);
 
     // Cargar las tareas desde el archivo JSON
-    $jsonFile = 'tasks.json';
+    $jsonFile = 'task.json';
     $tasks = [];
 
     if (file_exists($jsonFile)) {
