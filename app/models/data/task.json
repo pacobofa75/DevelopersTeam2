@@ -1,5 +1,5 @@
-[
-    {
+{
+    "0": {
         "id": "65219c868f307",
         "title": "ejemplo",
         "user": "p",
@@ -8,22 +8,13 @@
         "startTime": "2023-10-19T19:54",
         "endTime": "2023-10-11T19:54"
     },
-    {
-        "id": "65219ee5cbaac",
-        "title": "ejemplo",
-        "user": "p",
-        "description": "asfasf",
-        "status": "Running",
-        "startTime": "2023-10-11T20:09",
-        "endTime": "2023-10-11T20:09"
-    },
-    {
+    "2": {
         "id": "65219f2e9aadb",
         "title": "ejemplo",
         "user": "p",
         "description": "asfasf",
-        "status": "Running",
+        "status": "pending",
         "startTime": "2023-10-11T20:09",
         "endTime": "2023-10-11T20:09"
     }
-]
+}
