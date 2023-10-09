@@ -1,7 +1,5 @@
 <?php
-
-//require_once __DIR__ . '/../models/status.php';
-
+//agregar status
 class Task
 {
     private $id;
@@ -39,18 +37,6 @@ class Task
     public function getDescription()
     {
         return $this->description;
-    }
-    public function setTitle($title){
-        $this->title = $title;
-        }
-    public function setUser($user){
-        $this->user = $user;
-    }
-    public function setDescription($description){
-        $this->description = $description;
-        }
-    public function setId($id){
-        $this->id = $id;
     }
     public function getStartTime(){
         return $this -> startTime; 

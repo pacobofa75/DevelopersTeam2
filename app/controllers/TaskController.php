@@ -1,81 +1,92 @@
 <?php
+require_once '../app/models/TaskModel.php';
 
-require_once __DIR__ . '/../models/Task.php';
+class TaskController extends Controller{
+    private $model;
+    private $jsonFile;
 
-class TaskController
-{
-    private $tasks = [];
+    public function __construct() {
+            $this->jsonFile = "../app/models/data/tasks.json";
+            $this->model = new TaskModel();
 
-    public function __construct()
-    {
-        $this->loadTasksFromJson();
     }
+    public function indexAction()
+    {   
+        $taskList = new TaskModel();
+        // Obtener todas las tareas
+        $tasks = $taskList->getAllTasks();
 
-    public function index()
-    {
-        return $this->tasks;
+        // Pasar las tareas a la vista
+        $this->view->tasks = $tasks;
     }
+    public function createTaskAction() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create') {
+            // Obtener datos del formulario
+            $title = $_POST['title'];
+            $user = $_POST['user'];
+            $description = $_POST['description'];
+            $status = $_POST['status'];
+            $startTime = $_POST['starTime'];
+            $endTime = $_POST['endTime'];
 
-    public function store($title, $user, $description, $startTime, $endTime)
-    {
-        $task = new Task($title, $user, $description, $startTime, $endTime);
-        $this->tasks[] = $task;
-        $this->saveTasksToJson();
+            $this->model->createTask($title, $user, $description,$status, $startTime, $endTime);
+        
+            // Redirigir a la página principal
+            header("Location: index.php");
+            exit;
+        }
     }
-    public function delete($taskId)
-{
-    // Check if the task with the given index exists and delete it
-    if (array_key_exists($taskId, $this->tasks)) {
-        unset($this->tasks[$taskId]);
-
-        // Reindex the array to ensure there are no gaps in keys
-        $this->tasks = array_values($this->tasks);
-
-        // Save tasks to JSON file after deleting a task
-        $this->saveTasksToJson();
-    }
-}
-
-    private function loadTasksFromJson()
-    {
-        $jsonFile = __DIR__ . '/../models/data/tasks.json';
-        $json = file_get_contents($jsonFile);
+    public function editTaskAction() {
+        if (isset($_GET['id'])) {
+            $taskId = $_GET['id'];
+            $task = $this->model->getId($taskId);
     
-        if ($json !== false) {
-            $decodedTasks = json_decode($json);
-    
-            if (is_array($decodedTasks)) {
-                foreach ($decodedTasks as $taskData) {
-                    $task = new Task($taskData->title, $taskData->user, $taskData->description, $taskData->startTime, $taskData->endTime);
-                    $task->setId($taskData->id); // Assign the ID
-                    $this->tasks[] = $task;
+            if ($task !== null) {
+                $this->view->task = $task;
+                
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $this->model->updateTask(
+                        $_GET["id"], 
+                        $_POST['title'],
+                        $_POST['description'],
+                        $_POST['status'],
+                        $_POST['endTime']
+                    );
+                    
+                    header('Location: showTasks.php');
+                    exit;
                 }
+            } else {
+                echo "Task not found";
             }
         }
-    
-        if (!is_array($this->tasks)) {
-            $this->tasks = [];
-        }
     }
     
+    public function updateTask($taskId, $title, $description, $status, $endTime) {
+        return $this->model->updateTask($taskId, $title, $description, $status, $endTime);
+    }
 
-    private function saveTasksToJson()
-    {
-        $jsonFile = __DIR__ . '/../models/data/tasks.json';
-        $encodedTasks = [];
-    
-        foreach ($this->tasks as $task) {
-            $encodedTasks[] = [
-                'id' => $task->getId(),         // Include the ID
-                'title' => $task->getTitle(),
-                'user' => $task->getUser(),
-                'description' => $task->getDescription(),
-                'startTime' => $task->getStartTime(),
-                'endTime' =>$task->getEndTime()
-            ];
-        }
-    
-        $json = json_encode($encodedTasks, JSON_PRETTY_PRINT);
-        file_put_contents($jsonFile, $json);
+    public function showTasksAction() {
+        
+        $taskList = new TaskModel();
+        // Obtener todas las tareas
+        $tasks = $taskList->getAllTasks();
+
+        // Pasar las tareas a la vista
+        $this->view->tasks = $tasks;
     }
-}    
+    public function deleteTaskAction() {
+        if (isset($_GET['id'])) {
+            $taskId = $_GET['id'];
+            $taskList = new TaskModel();
+    
+            if (!$taskList->deleteTask($taskId)) {
+                echo "Task not found";
+            }
+        } else {
+            echo "Invalid request";
+        }
+    }
+    
+    }
+?>
