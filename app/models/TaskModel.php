@@ -6,8 +6,6 @@ class TaskModel {
 public function __construct() {
     $this->jsonFile = __DIR__ . "../../../app/models/data/task.json";
     $this->loadTasks();
-    // Debugging: Output the value of $this->jsonFile
-    // echo "JSON File Path: " . $this->jsonFile;
 }
 private function loadTasks() {
     if (file_exists($this->jsonFile)) {
