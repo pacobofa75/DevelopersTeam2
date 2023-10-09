@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-md mx-auto bg-white rounded p-6 shadow-lg">
+
+<?php
+    // Comprobar si hay tareas
+    if ($this->task !== null) {
+    ?>
+    <h1 class="text-2xl font-bold mb-4">Edit Task</h1>
+    <form method="post" action="">
+        <input type="hidden" name="id" value="<?php echo $this->task['id']; ?>">
+        
+        <div class="mb-4">
+            <label for="title" class="block text-lg font-semibold mb-1">Title:</label>
+            <input type="text" name="title" value="<?php echo $this->task['title']; ?>" class="border rounded py-2 px-3 focus:outline-none focus:border-blue-400 w-full">
+        </div>
+
+        <div class="mb-4">
+            <label for="description" class="block text-lg font-semibold mb-1">Description:</label>
+            <input type="text" name="description" value="<?php echo $this->task['description']; ?>" class="border rounded py-2 px-3 focus:outline-none focus:border-blue-400 w-full">
+        </div>
+
+        <div class="mb-4">
+            <label for="status" class="block text-lg font-semibold mb-1">Status:</label>
+            <select name="status" class="border rounded py-2 px-3 focus:outline-none focus:border-blue-400 w-full">
+                <option value="pending" <?php echo ($this->task['status'] === 'pending') ? 'selected' : ''; ?>>Pending</option>
+                <option value="running" <?php echo ($this->task['status'] === 'running') ? 'selected' : ''; ?>>Running</option>
+                <option value="completed" <?php echo ($this->task['status'] === 'completed') ? 'selected' : ''; ?>>Completed</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="endTime" class="block text-lg font-semibold mb-1">End Time:</label>
+            <input type="datetime-local" name="endTime" value="<?php echo date('Y-m-d\TH:i', strtotime($this->task['endTime'])); ?>" class="border rounded py-2 px-3 focus:outline-none focus:border-blue-400 w-full">
+        </div>
+
+        <div class="mb-4">
+            <a href="index.php" class="btn-cancel text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded transition duration-300 ease-in-out mr-2">Cancel</a>
+            <input type="submit" name="Update" value="Update" class="btn-confirm text-white bg-green-500 hover:bg-green-600 py-2 px-4 rounded transition duration-300 ease-in-out">
+        </div>
+    </form>
+    <?php
+    } else {
+        echo '<p class="text-xl text-red-500">No hay tareas disponibles.</p>';
+    }
+    ?>
+
+</div>
+</body>
+</html>

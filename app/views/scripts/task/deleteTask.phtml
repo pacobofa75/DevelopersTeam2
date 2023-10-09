@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-md mx-auto bg-white rounded p-6 shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Delete task</h1>
+    <p class="confirmation-text">Confirmar</p>
+    <form method="post" action="showTasks.php">
+        <a href="index.php" class="btn-cancel text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded transition duration-300 ease-in-out">Cancelar</a>
+        <input type="hidden" name="id" value="<?php echo $this->task['id']; ?>">
+        <input type="submit" name="delete" value="Confirm" class="btn-confirm text-white bg-green-500 hover:bg-green-600 py-2 px-4 rounded transition duration-300 ease-in-out">
+    </form>
+</div>
+</body>
+</html>
