@@ -11,56 +11,61 @@
     <div class="container">
         <h1 class="header">Lista de Tareas</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Título</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                    <th>Inicio</th>
-                    <th>Fin</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- LIST TASKS -->
-                <?php foreach ($this->tasks as $task) : ?>
+        <?php if (($this->tasks == null)) : ?>
+            <p class="text-center text-red-500">No hay tareas disponibles</p>
+        <?php else : ?>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo isset($task['user']) ? $task['user'] : '-'; ?></td>
-                        <td><?php echo isset($task['title']) ? $task['title'] : '-'; ?></td>
-                        <td title="<?php echo isset($task['description']) ? $task['description'] : ''; ?>"><?php echo isset($task['description']) ? $task['description'] : '-'; ?></td>
-                        <td>
-                            <?php
-                                $status = isset($task['status']) ? $task['status'] : '-';
-                                $statusClass = '';
-
-                                switch ($status) {
-                                    case 'Pending':
-                                        $statusClass = 'text-red-500';
-                                        break;
-                                    case 'Running':
-                                        $statusClass = 'text-yellow-500';
-                                        break;
-                                    case 'Completed':
-                                        $statusClass = 'text-green-500';
-                                        break;
-                                    default:
-                                        $statusClass = 'text-gray-500';
-                                }
-                            ?>
-                            <span class="<?php echo $statusClass; ?>"><?php echo $status; ?></span>
-                        </td>
-                        <td><?php echo isset($task['startTime']) ? $task['startTime'] : '-'; ?></td>
-                        <td><?php echo isset($task['endTime']) ? $task['endTime'] : '-'; ?></td>
-                        <td>
-                            <a href="editTask.php?id=<?php echo $task['id']; ?>" class="btn-edit">Editar</a>
-                            <a href="deleteTask.php?id=<?php echo $task['id']; ?>" onclick="return confirm('¿Estás seguro que deseas eliminar la tarea?')" class="btn-delete">Eliminar</a>
-                        </td>
+                        <th>Usuario</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Acciones</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <!-- lista las tareas -->
+                    <?php foreach ($this->tasks as $task) : ?>
+                        <tr>
+                            <td><?php echo isset($task['user']) ? $task['user'] : '-'; ?></td>
+                            <td><?php echo isset($task['title']) ? $task['title'] : '-'; ?></td>
+                            <td title="<?php echo isset($task['description']) ? $task['description'] : ''; ?>"><?php echo isset($task['description']) ? $task['description'] : '-'; ?></td>
+                            <td>
+                                <?php
+                                    $status = isset($task['status']) ? $task['status'] : '-';
+                                    $statusClass = '';
+
+                                    switch ($status) {
+                                        case 'Pending':
+                                            $statusClass = 'text-red-500'; 
+                                            break;
+                                        case 'running':
+                                            $statusClass = 'text-yellow-500'; 
+                                            break;
+                                        case 'completed':
+                                            $statusClass = 'text-green-500'; 
+                                            break;
+                                        default:
+                                            $statusClass = 'text-gray-500';
+                                    }
+                                ?>
+                                <span class="<?php echo $statusClass; ?>"><?php echo $status; ?></span>
+                            </td>
+                            <td><?php echo isset($task['startTime']) ? $task['startTime'] : '-'; ?></td>
+                            <td><?php echo isset($task['endTime']) ? $task['endTime'] : '-'; ?></td>
+                            <td>
+                                <a href="editTask.php?id=<?php echo $task['id']; ?>" class="btn-edit">Editar</a>
+                                <a href="deleteTask.php?id=<?php echo $task['id']; ?>" class="btn-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+
         <a href="index.php" class="btn-home">Inicio</a>
     </div>
 </body>
